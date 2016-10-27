@@ -5,6 +5,7 @@
 #include "viewport.h"
 #include "clock.h"
 #include "hud.h"
+#include "player.h"
 
 class Manager {
 public:
@@ -33,6 +34,7 @@ private:
   const std::string title;
   const int frameMax;
 
+  Player *player;
   Hud &hud;
   
   void draw() const;

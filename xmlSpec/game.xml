@@ -114,8 +114,19 @@
   <frameInterval>200</frameInterval>
   <speedX>200</speedX>
   <speedY>0</speedY>
-  <transparency>true</transparency> rr
+  <transparency>true</transparency> 
 </runningboy>
+
+<crab>
+  <file>images/crab.png</file>
+  <startLoc x="400" y="240"/>
+  <fixedY>0</fixedY>
+  <frames>2</frames>
+  <frameInterval>100</frameInterval>
+  <speedX>300</speedX>
+  <speedY>300</speedY>
+  <transparency>true</transparency> 
+</crab>
 
 <flyingbee>
   <file>images/flyingbee.png</file>

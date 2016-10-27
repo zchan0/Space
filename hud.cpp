@@ -59,7 +59,7 @@ void Hud::draw() const
     io.printMessageAt("S - move down",  30, 110);
     io.printMessageAt("A - move left",  30, 130);
   	io.printMessageAt("D - move right", 30, 150);
-    io.printMessageAt("s - slow; p - pasue", 30, 190);	
+    io.printMessageAt("l - slow; p - pasue", 30, 190);	
 	} else {
     io.printMessageAt("F1 Help", 30, 40);
 	}

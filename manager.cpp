@@ -2,7 +2,6 @@
 #include <string>
 #include <iomanip>
 #include "multisprite.h"
-#include "twowaysprite.h"
 #include "sprite.h"
 #include "gamedata.h"
 #include "manager.h"
@@ -31,6 +30,7 @@ Manager::Manager() :
   username(  Gamedata::getInstance().getXmlStr("username") ),
   title( Gamedata::getInstance().getXmlStr("screenTitle") ),
   frameMax( Gamedata::getInstance().getXmlInt("frameMax") ),
+  player( new Player("crab") ),
   hud( Hud::getInstance() )
 {
   if (SDL_Init(SDL_INIT_VIDEO) != 0) {
@@ -38,12 +38,15 @@ Manager::Manager() :
   }
   SDL_WM_SetCaption(title.c_str(), NULL);
   atexit(SDL_Quit);
+
+  sprites.push_back( player );
   sprites.push_back( new MultiSprite("flyingbee") );
   sprites.push_back( new MultiSprite("runningboy") );
   sprites.push_back( new MultiSprite("runningman") );
   sprites.push_back( new MultiSprite("flyingbird") );
   sprites.push_back( new TwowaySprite("flappybird") );
   sprites.push_back( new TwowaySprite("pinkbird") );
+
   viewport.setObjectToTrack(sprites[currentSprite]);
 }
 
@@ -109,22 +112,56 @@ void Manager::play() {
   while ( not done ) {
     while ( SDL_PollEvent(&event) ) {
       Uint8 *keystate = SDL_GetKeyState(NULL);
-      if (event.type ==  SDL_QUIT) { done = true; break; }
+      if (event.type ==  SDL_QUIT) { 
+        done = true; break; 
+      }
+
+      // No key input, set player to STAND status
+      if (event.type == SDL_KEYUP) {
+        player -> setStatus(Player::STAND);
+      }
+
       if(event.type == SDL_KEYDOWN) {
         if (keystate[SDLK_ESCAPE] || keystate[SDLK_q]) {
           done = true;
           break;
         }
-        // if ( keystate[SDLK_t] ) {
-        //   switchSprite();
-        // }
-        if ( keystate[SDLK_s] ) {
+        if ( keystate[SDLK_t] ) {
+          switchSprite();
+        }
+        if ( keystate[SDLK_l] ) {
           clock.toggleSloMo();
         }
         if ( keystate[SDLK_p] ) {
           if ( clock.isPaused() ) clock.unpause();
           else clock.pause();
         }
+        // player's key
+        if (keystate[SDLK_a]) {
+          player -> setStatus(Player::LEFT);
+        }
+        if (keystate[SDLK_d]) {
+          player -> setStatus(Player::RIGHT);
+        }
+        if (keystate[SDLK_w]) {
+          player -> setStatus(Player::UP); 
+        }
+        if (keystate[SDLK_s]) {
+          player -> setStatus(Player::DOWN);
+        }
+        if (keystate[SDLK_a] && keystate[SDLK_w]) {
+          player -> setStatus(Player::UPLEFT);
+        }
+        if (keystate[SDLK_a] && keystate[SDLK_s]) {
+          player -> setStatus(Player::DOWNLEFT);
+        }
+        if (keystate[SDLK_d] && keystate[SDLK_w]) {
+          player -> setStatus(Player::UPRIGHT);
+        }
+        if (keystate[SDLK_d] && keystate[SDLK_s]) {
+          player -> setStatus(Player::DOWNRIGHT);
+        }
+        // F key
         if (keystate[SDLK_F1]) {
           hud.toggle();
         }
