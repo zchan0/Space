@@ -6,7 +6,12 @@
 void TwowaySprite::advanceFrame(Uint32 ticks) {
   timeSinceLastFrame += ticks;
   if (timeSinceLastFrame > frameInterval) {
-    direction = velocityX() >= 0 ? RIGHT : LEFT;
+    if (velocityX() == 0) {
+      direction = lastDirection;
+    } else {
+      direction = velocityX() > 0 ? RIGHT : LEFT;
+      lastDirection = direction;
+    }
     timeSinceLastFrame = 0;
   }
 }
@@ -23,6 +28,7 @@ TwowaySprite::TwowaySprite( const std::string& name) :
   worldHeight( Gamedata::getInstance().getXmlInt("world/height") ),
  
   direction(RIGHT),
+  lastDirection(RIGHT),
   numberOfFrames( Gamedata::getInstance().getXmlInt(name+"/frames") ),
   frameInterval( Gamedata::getInstance().getXmlInt(name+"/frameInterval") ),
   timeSinceLastFrame(0),
@@ -36,6 +42,7 @@ TwowaySprite::TwowaySprite(const TwowaySprite& s) :
   worldWidth( s.worldWidth ),
   worldHeight( s.worldHeight ),
   direction( s.direction ),
+  lastDirection( s.lastDirection ),
 
   numberOfFrames( s.numberOfFrames ),
   frameInterval( s.frameInterval ),

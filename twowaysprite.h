@@ -25,6 +25,7 @@ protected:
   int worldHeight;
 
   Direction direction;
+  Direction lastDirection; // keep last direction frame
   unsigned numberOfFrames;
   unsigned frameInterval;
   float timeSinceLastFrame;
