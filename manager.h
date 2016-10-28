@@ -21,12 +21,12 @@ private:
   Clock& clock;
 
   SDL_Surface * const screen;
-  SDL_Surface * const yellowstarSurface;
+  SDL_Surface * const asteroidSurface;
   Viewport& viewport;
 
   std::vector<World*> worlds;
   std::vector<Drawable*> sprites;
-  std::vector<ScaledSprite*> stars;
+  std::vector<ScaledSprite*> asteroids;
 
   int currentSprite;
   bool makeVideo;
@@ -40,8 +40,8 @@ private:
   
   void draw() const;
   void update();
-  void makeStars();
-  void printStars();
+  void makeAsteroids();
+  void printAsteroids();
 
   Manager(const Manager&);
   Manager& operator=(const Manager&);

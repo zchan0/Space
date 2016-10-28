@@ -11,10 +11,6 @@ class Player: public TwowaySprite
 			DOWN,
 			LEFT,
 			RIGHT,
-			UPLEFT,
-			UPRIGHT,
-			DOWNLEFT,
-			DOWNRIGHT,
 			STAND	
 		};
 

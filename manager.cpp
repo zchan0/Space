@@ -19,7 +19,7 @@ Manager::~Manager() {
   // These deletions eliminate "definitely lost" and
   // "still reachable"s in Valgrind.
   
-  SDL_FreeSurface(yellowstarSurface);
+  SDL_FreeSurface(asteroidSurface);
 
   for (unsigned int i = 0; i < worlds.size(); ++i) {
     delete worlds[i];
@@ -29,11 +29,11 @@ Manager::~Manager() {
     delete sprites[i];
   }
 
-  for (unsigned int i = 0; i < stars.size(); ++i) {
-    delete stars[i];
+  for (unsigned int i = 0; i < asteroids.size(); ++i) {
+    delete asteroids[i];
   }
 
-  stars.clear();
+  asteroids.clear();
   worlds.clear();
   sprites.clear();
 }
@@ -43,18 +43,18 @@ Manager::Manager() :
   io( IOManager::getInstance() ),
   clock( Clock::getInstance() ),
   screen( io.getScreen() ),
-  yellowstarSurface( io.loadAndSet(Gamedata::getInstance().getXmlStr("yellowstar/file"), Gamedata::getInstance().getXmlBool("yellowstar/transparency")) ),
+  asteroidSurface( io.loadAndSet(Gamedata::getInstance().getXmlStr("asteroid/file"), Gamedata::getInstance().getXmlBool("asteroid/transparency")) ),
   viewport( Viewport::getInstance() ),
   worlds(),
   sprites(),
-  stars(),
+  asteroids(),
   currentSprite(0),
   makeVideo( false ),
   frameCount( 0 ),
   username(  Gamedata::getInstance().getXmlStr("username") ),
   title( Gamedata::getInstance().getXmlStr("screenTitle") ),
   frameMax( Gamedata::getInstance().getXmlInt("frameMax") ),
-  player( new Player("crab") ),
+  player( new Player("ship") ),
   hud( Hud::getInstance() )
 {
   if (SDL_Init(SDL_INIT_VIDEO) != 0) {
@@ -63,21 +63,16 @@ Manager::Manager() :
   SDL_WM_SetCaption(title.c_str(), NULL);
   atexit(SDL_Quit);
 
-  makeStars();
-  // printStars();
+  makeAsteroids();
+  // printAsteroids();
 
-  worlds.push_back( new World("back", Gamedata::getInstance().getXmlInt("back/factor")) ); 
-  worlds.push_back( new World("mountain1", Gamedata::getInstance().getXmlInt("mountain1/factor")) ); 
-  worlds.push_back( new World("mountain2", Gamedata::getInstance().getXmlInt("mountain2/factor")) ); 
+  worlds.push_back( new World("back1", Gamedata::getInstance().getXmlInt("back1/factor")) ); 
+  worlds.push_back( new World("back2", Gamedata::getInstance().getXmlInt("back2/factor")) ); 
+  worlds.push_back( new World("back3", Gamedata::getInstance().getXmlInt("back3/factor")) ); 
   std::sort(worlds.begin(), worlds.end(), WorldFactorCompare());
 
+  player -> setStatus(Player::STAND);
   sprites.push_back( player );
-  sprites.push_back( new MultiSprite("flyingbee") );
-  sprites.push_back( new MultiSprite("runningboy") );
-  sprites.push_back( new MultiSprite("runningman") );
-  sprites.push_back( new MultiSprite("flyingbird") );
-  sprites.push_back( new TwowaySprite("flappybird") );
-  sprites.push_back( new TwowaySprite("pinkbird") );
 
   viewport.setObjectToTrack(sprites[currentSprite]);
 }
@@ -87,17 +82,17 @@ void Manager::draw() const {
   //  to create depth, draw order matters
   //  create count = worlds.size() scale ranges
   float scale; 
-  float minScale = stars[0] -> minScale();
-  float maxScale = stars[0] -> maxScale();
+  float minScale = asteroids[0] -> minScale();
+  float maxScale = asteroids[0] -> maxScale();
   float stepScale = (maxScale - minScale) / worlds.size();
 
   for (unsigned int i = 0; i < worlds.size(); ++i) {
     worlds[i] -> draw();
 
-    for (unsigned int j = 0; j < stars.size(); ++j) {
-      scale = stars[j] -> getScale();
+    for (unsigned int j = 0; j < asteroids.size(); ++j) {
+      scale = asteroids[j] -> getScale();
       if (scale > minScale + i * stepScale && scale < minScale + (i + 1) * stepScale ) 
-        stars[j] -> draw();
+        asteroids[j] -> draw();
     }
   }
 
@@ -105,7 +100,7 @@ void Manager::draw() const {
     sprites[i]->draw();
   }
 
-  // io.printMessageAt(title, 3, 80);
+  io.printMessageAt(title, 30, 650);
   
   hud.draw();
   viewport.draw();
@@ -128,18 +123,18 @@ void Manager::switchSprite() {
   viewport.setObjectToTrack(sprites[currentSprite]);
 }
 
-void Manager::makeStars() {
-  unsigned int numberOfStars = Gamedata::getInstance().getXmlInt("numberOfStars");
-  stars.reserve(numberOfStars);
-  for (unsigned int i = 0; i < numberOfStars; ++i) {
-    stars.push_back( new ScaledSprite("yellowstar", yellowstarSurface) );
+void Manager::makeAsteroids() {
+  unsigned int numberOfAsteroids = Gamedata::getInstance().getXmlInt("numberOfAsteroids");
+  asteroids.reserve(numberOfAsteroids);
+  for (unsigned int i = 0; i < numberOfAsteroids; ++i) {
+    asteroids.push_back( new ScaledSprite("asteroid", asteroidSurface) );
   }
-  std::sort(stars.begin(), stars.end(), ScaledSpriteCompare());
+  std::sort(asteroids.begin(), asteroids.end(), ScaledSpriteCompare());
 }
 
-void Manager::printStars() {
-  for (unsigned int i = 0; i < stars.size(); ++i) {
-    std::cout << stars[i] -> getScale() << std::endl;
+void Manager::printAsteroids() {
+  for (unsigned int i = 0; i < asteroids.size(); ++i) {
+    std::cout << asteroids[i] -> getScale() << std::endl;
   }
 }
 
@@ -157,8 +152,8 @@ void Manager::update() {
     sprites[i]->update(ticks);
   }
 
-  for (unsigned int i = 0; i < stars.size(); ++i) {
-    stars[i] -> update(ticks);
+  for (unsigned int i = 0; i < asteroids.size(); ++i) {
+    asteroids[i] -> update(ticks);
   }
 
   if ( makeVideo && frameCount < frameMax ) {
@@ -216,18 +211,6 @@ void Manager::play() {
         }
         if (keystate[SDLK_s]) {
           player -> setStatus(Player::DOWN);
-        }
-        if (keystate[SDLK_a] && keystate[SDLK_w]) {
-          player -> setStatus(Player::UPLEFT);
-        }
-        if (keystate[SDLK_a] && keystate[SDLK_s]) {
-          player -> setStatus(Player::DOWNLEFT);
-        }
-        if (keystate[SDLK_d] && keystate[SDLK_w]) {
-          player -> setStatus(Player::UPRIGHT);
-        }
-        if (keystate[SDLK_d] && keystate[SDLK_s]) {
-          player -> setStatus(Player::DOWNRIGHT);
         }
         // F key
         if (keystate[SDLK_F1]) {

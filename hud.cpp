@@ -45,7 +45,7 @@ void Hud::drawBox() const
   // Fill
   Draw_AALine(screen, startX, startY + height / 2, 
                       startX + width, startY + height / 2, 
-                      height, 0xff, 0xff, 0xff, 0xc8);
+                      height, 0xff, 0xff, 0xff, 0x99);
 }
 
 void Hud::draw() const
