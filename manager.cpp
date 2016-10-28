@@ -83,12 +83,22 @@ Manager::Manager() :
 }
 
 void Manager::draw() const {
+  
+  //  to create depth, draw order matters
+  //  create count = worlds.size() scale ranges
+  float scale; 
+  float minScale = stars[0] -> minScale();
+  float maxScale = stars[0] -> maxScale();
+  float stepScale = (maxScale - minScale) / worlds.size();
+
   for (unsigned int i = 0; i < worlds.size(); ++i) {
     worlds[i] -> draw();
-  }
 
-  for (unsigned int i = 0; i < stars.size(); ++i) {
-    stars[i] -> draw();
+    for (unsigned int j = 0; j < stars.size(); ++j) {
+      scale = stars[j] -> getScale();
+      if (scale > minScale + i * stepScale && scale < minScale + (i + 1) * stepScale ) 
+        stars[j] -> draw();
+    }
   }
 
   for (unsigned int i = 0; i < sprites.size(); ++i) {

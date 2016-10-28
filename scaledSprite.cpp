@@ -76,6 +76,13 @@ unsigned ScaledSprite::getPixel(Uint32 i, Uint32 j) const {
   return pixels[ ( y * frame->getWidth() ) + x ];
 }
 
+float ScaledSprite::minScale() const {
+  return Gamedata::getInstance().getXmlFloat(getName() + "/scale/min");
+}
+
+float ScaledSprite::maxScale() const {
+  return Gamedata::getInstance().getXmlFloat(getName() + "/scale/max");
+}
 
 void ScaledSprite::update(Uint32 ticks) { 
   Vector2f incr = getVelocity() * static_cast<float>(ticks) * 0.001;
@@ -85,6 +92,7 @@ void ScaledSprite::update(Uint32 ticks) {
     velocityY( abs( velocityY() ) );
   }
   if ( Y() > worldHeight-frameHeight) {
+    setPosition( Vector2f(rand() % worldWidth, 0.0) );
     velocityY( -abs( velocityY() ) );
   }
 

@@ -27,6 +27,9 @@ public:
     return Vector2f( X()+frame->getWidth()/2, Y()+frame->getHeight()/2 );
   }
 
+  float minScale() const;
+  float maxScale() const;
+
 private:
   double scale;
   SDL_Surface* scaledSurface;

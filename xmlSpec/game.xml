@@ -4,7 +4,7 @@
      So make sure to include your name as part of the screenTitle -->
 <screenTitle> Cencen Zheng's On the Way </screenTitle>
 <maxStringSize>50</maxStringSize>
-<numberOfStars>50</numberOfStars>
+<numberOfStars>30</numberOfStars>
 
 <frameCap>60</frameCap>
 <frameBase>200</frameBase>
@@ -28,7 +28,7 @@
 </hud>
 
 <world>
-  <width>854</width>
+  <width>4000</width>
   <height>480</height>
 </world>
 
@@ -45,8 +45,8 @@
   <src x="0" y="0"/>
   <width>32</width>
   <height>32</height>
-  <loc x="320" y="240"/>
-  <speed x="250" y="250"/>
+  <loc x="0" y="0"/>
+  <speed x="1" y="200"/>
   <transparency>true</transparency>
 </yellowstar>
 
