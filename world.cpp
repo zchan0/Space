@@ -22,3 +22,7 @@ void World::draw() const {
   frame->draw(0, viewY, frameWidth-viewX, 0); 
 }
 
+int World::getFactor() const {
+  return factor;
+}
+

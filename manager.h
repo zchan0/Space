@@ -20,14 +20,12 @@ private:
   Clock& clock;
 
   SDL_Surface * const screen;
-  World mountain2;
-  World mountain1;
-  World world;
   Viewport& viewport;
 
+  std::vector<World*> worlds;
   std::vector<Drawable*> sprites;
-  int currentSprite;
 
+  int currentSprite;
   bool makeVideo;
   int frameCount;
   const std::string username;

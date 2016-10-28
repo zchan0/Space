@@ -49,12 +49,6 @@
   <transparency>true</transparency>
 </mountain2>
 
-<!-- <mountain3>
-  <file>images/MountainMostFar.png</file>
-  <factor>8</factor>
-  <transparency>true</transparency>
-</mountain3> -->
-
 <font name="font">
   <file>font/dyslexic-bold.otf</file>
   <size>16</size>

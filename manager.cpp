@@ -1,6 +1,8 @@
 #include <iostream>
 #include <string>
 #include <iomanip>
+#include <algorithm>
+
 #include "multisprite.h"
 #include "sprite.h"
 #include "gamedata.h"
@@ -19,10 +21,8 @@ Manager::Manager() :
   io( IOManager::getInstance() ),
   clock( Clock::getInstance() ),
   screen( io.getScreen() ),
-  mountain2("mountain2", Gamedata::getInstance().getXmlInt("mountain2/factor") ),
-  mountain1("mountain1", Gamedata::getInstance().getXmlInt("mountain1/factor") ),
-  world("back", Gamedata::getInstance().getXmlInt("back/factor") ),
   viewport( Viewport::getInstance() ),
+  worlds(),
   sprites(),
   currentSprite(0),
   makeVideo( false ),
@@ -39,6 +39,11 @@ Manager::Manager() :
   SDL_WM_SetCaption(title.c_str(), NULL);
   atexit(SDL_Quit);
 
+  worlds.push_back( new World("back", Gamedata::getInstance().getXmlInt("back/factor")) ); 
+  worlds.push_back( new World("mountain1", Gamedata::getInstance().getXmlInt("mountain1/factor")) ); 
+  worlds.push_back( new World("mountain2", Gamedata::getInstance().getXmlInt("mountain2/factor")) ); 
+  std::sort(worlds.begin(), worlds.end(), WorldFactorCompare());
+
   sprites.push_back( player );
   sprites.push_back( new MultiSprite("flyingbee") );
   sprites.push_back( new MultiSprite("runningboy") );
@@ -51,10 +56,11 @@ Manager::Manager() :
 }
 
 void Manager::draw() const {
-  mountain2.draw();
-  mountain1.draw();
-  world.draw();
-  for (unsigned i = 0; i < sprites.size(); ++i) {
+  for (unsigned int i = 0; i < worlds.size(); ++i) {
+    worlds[i] -> draw();
+  }
+
+  for (unsigned int i = 0; i < sprites.size(); ++i) {
     sprites[i]->draw();
   }
 
@@ -94,13 +100,15 @@ void Manager::update() {
   for (unsigned int i = 0; i < sprites.size(); ++i) {
     sprites[i]->update(ticks);
   }
+
   if ( makeVideo && frameCount < frameMax ) {
     makeFrame();
   }
 
-  mountain2.update();
-  mountain1.update();
-  world.update();
+  for (unsigned int i = 0; i < worlds.size(); ++i) {
+    worlds[i] -> update();
+  }
+
   hud.update(ticks);
   viewport.update(); // always update viewport last
 }
