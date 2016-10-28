@@ -71,8 +71,7 @@ void MultiSprite::update(Uint32 ticks) {
     velocityX( abs( velocityX() ) );
   }
 
-  // Commend following code to make sprite keep going
-  // if ( X() > worldWidth-frameWidth) {
-  //   velocityX( -abs( velocityX() ) );
-  // }  
+  if ( X() > worldWidth-frameWidth) {
+    velocityX( -abs( velocityX() ) );
+  }  
 }

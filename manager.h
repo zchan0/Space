@@ -6,6 +6,7 @@
 #include "clock.h"
 #include "hud.h"
 #include "player.h"
+#include "scaledSprite.h"
 
 class Manager {
 public:
@@ -20,10 +21,12 @@ private:
   Clock& clock;
 
   SDL_Surface * const screen;
+  SDL_Surface * const yellowstarSurface;
   Viewport& viewport;
 
   std::vector<World*> worlds;
   std::vector<Drawable*> sprites;
+  std::vector<ScaledSprite*> stars;
 
   int currentSprite;
   bool makeVideo;
@@ -37,6 +40,8 @@ private:
   
   void draw() const;
   void update();
+  void makeStars();
+  void printStars();
 
   Manager(const Manager&);
   Manager& operator=(const Manager&);

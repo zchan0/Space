@@ -8,12 +8,34 @@
 #include "gamedata.h"
 #include "manager.h"
 
+class ScaledSpriteCompare {
+public:
+  bool operator()(const ScaledSprite *lhs, const ScaledSprite *rhs) const {
+    return lhs -> getScale() < rhs -> getScale();
+  }
+};
+
 Manager::~Manager() { 
   // These deletions eliminate "definitely lost" and
   // "still reachable"s in Valgrind.
+  
+  SDL_FreeSurface(yellowstarSurface);
+
+  for (unsigned int i = 0; i < worlds.size(); ++i) {
+    delete worlds[i];
+  }
+
   for (unsigned i = 0; i < sprites.size(); ++i) {
     delete sprites[i];
   }
+
+  for (unsigned int i = 0; i < stars.size(); ++i) {
+    delete stars[i];
+  }
+
+  stars.clear();
+  worlds.clear();
+  sprites.clear();
 }
 
 Manager::Manager() :
@@ -21,9 +43,11 @@ Manager::Manager() :
   io( IOManager::getInstance() ),
   clock( Clock::getInstance() ),
   screen( io.getScreen() ),
+  yellowstarSurface( io.loadAndSet(Gamedata::getInstance().getXmlStr("yellowstar/file"), Gamedata::getInstance().getXmlBool("yellowstar/transparency")) ),
   viewport( Viewport::getInstance() ),
   worlds(),
   sprites(),
+  stars(),
   currentSprite(0),
   makeVideo( false ),
   frameCount( 0 ),
@@ -38,6 +62,9 @@ Manager::Manager() :
   }
   SDL_WM_SetCaption(title.c_str(), NULL);
   atexit(SDL_Quit);
+
+  makeStars();
+  // printStars();
 
   worlds.push_back( new World("back", Gamedata::getInstance().getXmlInt("back/factor")) ); 
   worlds.push_back( new World("mountain1", Gamedata::getInstance().getXmlInt("mountain1/factor")) ); 
@@ -58,6 +85,10 @@ Manager::Manager() :
 void Manager::draw() const {
   for (unsigned int i = 0; i < worlds.size(); ++i) {
     worlds[i] -> draw();
+  }
+
+  for (unsigned int i = 0; i < stars.size(); ++i) {
+    stars[i] -> draw();
   }
 
   for (unsigned int i = 0; i < sprites.size(); ++i) {
@@ -87,6 +118,21 @@ void Manager::switchSprite() {
   viewport.setObjectToTrack(sprites[currentSprite]);
 }
 
+void Manager::makeStars() {
+  unsigned int numberOfStars = Gamedata::getInstance().getXmlInt("numberOfStars");
+  stars.reserve(numberOfStars);
+  for (unsigned int i = 0; i < numberOfStars; ++i) {
+    stars.push_back( new ScaledSprite("yellowstar", yellowstarSurface) );
+  }
+  std::sort(stars.begin(), stars.end(), ScaledSpriteCompare());
+}
+
+void Manager::printStars() {
+  for (unsigned int i = 0; i < stars.size(); ++i) {
+    std::cout << stars[i] -> getScale() << std::endl;
+  }
+}
+
 void Manager::update() {
   ++clock;
   Uint32 ticks = clock.getElapsedTicks();
@@ -99,6 +145,10 @@ void Manager::update() {
 
   for (unsigned int i = 0; i < sprites.size(); ++i) {
     sprites[i]->update(ticks);
+  }
+
+  for (unsigned int i = 0; i < stars.size(); ++i) {
+    stars[i] -> update(ticks);
   }
 
   if ( makeVideo && frameCount < frameMax ) {

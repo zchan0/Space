@@ -40,10 +40,10 @@ void Player::update(Uint32 ticks)
     X(0);
   }
 
- //  if ( X() > worldWidth - frameWidth) {
- //    velocityX(0);
- //    X(worldWidth - frameWidth);
-	// }
+  if ( X() > worldWidth - frameWidth) {
+    velocityX(0);
+    X(worldWidth - frameWidth);
+	}
 }
 
 void Player::setStatus(Status s)

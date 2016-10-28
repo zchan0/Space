@@ -8,22 +8,37 @@ Frame::Frame( SDL_Surface* surf ) :
   screen(IOManager::getInstance().getScreen()),
   surface( surf ),
   width(surf->w), 
-  height(surf->h)
+  height(surf->h),
+  spriteSourceX(0),
+  spriteSourceY(0)
 { }
 
 Frame::Frame( const Frame& frame ) :
   screen(frame.screen),
   surface(frame.surface), 
   width(surface->w), 
-  height(surface->h)
+  height(surface->h),
+  spriteSourceX(frame.spriteSourceX),
+  spriteSourceY(frame.spriteSourceY)
 { }
 
+Frame::Frame( SDL_Surface* spr, Uint16 sprite_width, Uint16 sprite_height,
+              Sint16 src_x, Sint16 src_y) :
+  screen(IOManager::getInstance().getScreen()),
+  surface(spr), 
+  width(sprite_width), 
+  height(sprite_height),
+  spriteSourceX(src_x), 
+  spriteSourceY(src_y) 
+{ }
 
 Frame& Frame::operator=(const Frame& rhs) {
   surface = rhs.surface;
   screen = rhs.screen;
   width = surface->w;
   height = surface->h;
+  spriteSourceX = rhs.spriteSourceX;
+  spriteSourceY = rhs.spriteSourceY;
   return *this;
 }
 
