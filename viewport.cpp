@@ -37,9 +37,9 @@ void Viewport::update() {
   position[1] = (y + objHeight/2) - viewHeight/2;
   if (position[0] < 0) position[0] = 0;
   if (position[1] < 0) position[1] = 0;
-  // if (position[0] > (worldWidth - viewWidth)) {
-  //   position[0] = worldWidth-viewWidth;
-  // }
+  if (position[0] > (worldWidth - viewWidth)) {
+    position[0] = worldWidth-viewWidth;
+  }
   if (position[1] > (worldHeight - viewHeight)) {
     position[1] = worldHeight-viewHeight;
   }

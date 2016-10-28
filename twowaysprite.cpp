@@ -70,11 +70,10 @@ void TwowaySprite::update(Uint32 ticks) {
     velocityY( -abs( velocityY() ) );
   }
 
-  if ( X() < worldWidth - frameWidth) {
+  if ( X() < 0) {
     velocityX( abs( velocityX() ) );
   }
-
-  if ( X() > (worldWidth - frameWidth) * 2 - 150) {
-    velocityX( -abs( velocityX() / 2 ) );
+  if ( X() > worldWidth-frameWidth) {
+    velocityX( -abs( velocityX() ) );
   }  
 }
