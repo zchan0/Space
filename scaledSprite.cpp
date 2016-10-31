@@ -97,6 +97,7 @@ void ScaledSprite::update(Uint32 ticks) {
   }
 
   if ( X() < 0) {
+    setPosition( Vector2f(rand() % worldWidth, 0.0) );
     velocityX( abs( velocityX() ) );
   }
   if ( X() > worldWidth-frameWidth) {

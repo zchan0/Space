@@ -39,7 +39,7 @@
   <src x="0" y="0"/>
   <width>32</width>
   <height>32</height>
-  <loc x="0" y="0"/>
+  <loc x="-40" y="-40"/>
   <speed x="1" y="500"/>
   <transparency>true</transparency>
 </asteroid>
