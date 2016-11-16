@@ -85,7 +85,7 @@ float ScaledSprite::maxScale() const {
 }
 
 void ScaledSprite::update(Uint32 ticks) { 
-  Vector2f incr = getVelocity() * static_cast<float>(ticks) * 0.001;
+  Vector2f incr = getVelocity() * scale * static_cast<float>(ticks) * 0.001;
   setPosition(getPosition() + incr);
 
   if ( Y() < 0) {
