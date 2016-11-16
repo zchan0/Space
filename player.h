@@ -1,5 +1,6 @@
 #include "ioManager.h"
 #include "twowaysprite.h"
+#include "explodingSprite.h"
 
 class Player: public TwowaySprite
 {
@@ -8,7 +9,11 @@ class Player: public TwowaySprite
 		enum Status
 		{
 			UP = 0,
+			UPLEFT,
+			UPRIGHT,
 			DOWN,
+			DOWNLEFT,
+			DOWNRIGHT,
 			LEFT,
 			RIGHT,
 			STAND	

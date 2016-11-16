@@ -206,11 +206,30 @@ void Manager::play() {
         if (keystate[SDLK_d]) {
           player -> setStatus(Player::RIGHT);
         }
+        if (keystate[SDLK_a] && keystate[SDLK_d]) {
+          player -> setStatus(Player::STAND);
+        }
+
         if (keystate[SDLK_w]) {
           player -> setStatus(Player::UP); 
         }
+        if (keystate[SDLK_w] && keystate[SDLK_a]) {
+          player -> setStatus(Player::UPLEFT);
+        }
+        if (keystate[SDLK_w] && keystate[SDLK_d]) {
+          player -> setStatus(Player::UPRIGHT);
+        }
         if (keystate[SDLK_s]) {
           player -> setStatus(Player::DOWN);
+        }
+        if (keystate[SDLK_s] && keystate[SDLK_a]) {
+          player -> setStatus(Player::DOWNLEFT);
+        }
+        if (keystate[SDLK_s] && keystate[SDLK_d]) {
+          player -> setStatus(Player::DOWNRIGHT);
+        }
+        if (keystate[SDLK_w] && keystate[SDLK_s]) {
+          player -> setStatus(Player::STAND);
         }
         // F key
         if (keystate[SDLK_F1]) {

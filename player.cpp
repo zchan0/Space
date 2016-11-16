@@ -54,8 +54,24 @@ void Player::setStatus(Status s)
 			velocityX(0);
 			velocityY(-abs(speedY));
 			break;
+		case UPLEFT:
+			velocityX(-abs(speedX));
+			velocityY(-abs(speedY));
+			break;
+		case UPRIGHT:
+			velocityX(abs(speedX));
+			velocityY(-abs(speedY));
+			break;
 		case DOWN:
 			velocityX(0);
+			velocityY(speedY);
+			break;
+		case DOWNLEFT:
+			velocityX(-abs(speedX));
+			velocityY(speedY);
+			break;
+		case DOWNRIGHT:
+			velocityX(abs(speedX));
 			velocityY(speedY);
 			break;
 		case LEFT:
@@ -66,7 +82,7 @@ void Player::setStatus(Status s)
 			velocityX(speedX);
 			velocityY(0);
 			break;
-		case STAND:
+		case STAND: 
 		default:
 			velocityX(0);
 			velocityY(0);
