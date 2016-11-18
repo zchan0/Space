@@ -3,6 +3,7 @@
 #include "SDL/SDL_rotozoom.h"
 #include "scaledSprite.h"
 #include "gamedata.h"
+#include "explodingSprite.h"
 
 ScaledSprite::ScaledSprite(const std::string& name, 
                            SDL_Surface* surface) :
@@ -21,6 +22,7 @@ ScaledSprite::ScaledSprite(const std::string& name,
                      Gamedata::getInstance().getXmlFloat(name+"/scale/max"))
   ),
   scaledSurface( rotozoomSurface(surface, 0, scale, SMOOTHING_ON) ),
+  explosion( NULL ),
   frame( new Frame(scaledSurface, scaledSurface->w, scaledSurface->h,
                    Gamedata::getInstance().getXmlInt(name+"/src/x"), 
                    Gamedata::getInstance().getXmlInt(name+"/src/y"))
@@ -35,6 +37,7 @@ ScaledSprite::ScaledSprite(const ScaledSprite& s) :
   Drawable(s.getName(), s.getPosition(), s.getVelocity()), 
   scale(s.scale),
   scaledSurface(s.scaledSurface),
+  explosion( s.explosion ),
   frame(s.frame),
   frameWidth(s.frameWidth),
   frameHeight(s.frameHeight),
@@ -59,9 +62,15 @@ ScaledSprite& ScaledSprite::operator=(const ScaledSprite& rhs) {
 ScaledSprite::~ScaledSprite() {
   SDL_FreeSurface( scaledSurface );
   delete frame;
+  if (explosion) delete explosion;
 }
 
 void ScaledSprite::draw() const { 
+  if (explosion) {
+    explosion -> draw();
+    return;
+  }
+
   Uint32 x = static_cast<Uint32>(X());
   Uint32 y = static_cast<Uint32>(Y());
   frame->draw(x, y); 
@@ -85,6 +94,15 @@ float ScaledSprite::maxScale() const {
 }
 
 void ScaledSprite::update(Uint32 ticks) { 
+  if (explosion) {
+    explosion -> update(ticks);
+    if (explosion -> chunkCount() == 0) {
+      delete explosion;
+      explosion = NULL;
+    }
+    return;
+  }
+
   Vector2f incr = getVelocity() * scale * static_cast<float>(ticks) * 0.001;
   setPosition(getPosition() + incr);
 
@@ -103,4 +121,10 @@ void ScaledSprite::update(Uint32 ticks) {
   if ( X() > worldWidth-frameWidth) {
     velocityX( -abs( velocityX() ) );
   }  
+}
+
+void ScaledSprite::explode() {
+  if (explosion) return;
+  Sprite sprite(getName(), getPosition(), getVelocity(), getFrame());
+  explosion = new ExplodingSprite(sprite); 
 }

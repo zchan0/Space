@@ -6,6 +6,8 @@
 
 #include "drawable.h"
 
+class ExplodingSprite;
+
 class ScaledSprite : public Drawable {
 public:
   ScaledSprite(const std::string&, SDL_Surface*);
@@ -29,10 +31,12 @@ public:
 
   float minScale() const;
   float maxScale() const;
+  void explode();
 
 private:
   double scale;
   SDL_Surface* scaledSurface;
+  ExplodingSprite *explosion;
   const Frame * frame;
   int frameWidth;
   int frameHeight;

@@ -47,6 +47,10 @@ public:
     throw std::string("No collidedWith");  
   }
 
+  virtual void explode() {
+    throw std::string("I cannot explode!");
+  }
+
 private:
   std::string name;
   Vector2f position;

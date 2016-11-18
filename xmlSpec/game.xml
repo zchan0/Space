@@ -42,6 +42,10 @@
   <loc x="-40" y="-40"/>
   <speed x="1" y="200"/>
   <transparency>true</transparency>
+  <chunk>
+    <size>20</size>
+    <distance>200</distance>
+  </chunk>
 </asteroid>
 
 <back1>
@@ -80,6 +84,10 @@
   <speedX>500</speedX>
   <speedY>500</speedY>
   <transparency>true</transparency> 
+  <chunk> 
+    <size>20</size>
+    <distance>200</distance>
+  </chunk>
 </ship>
 
 </GameData>

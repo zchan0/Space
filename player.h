@@ -1,6 +1,5 @@
 #include "ioManager.h"
 #include "twowaysprite.h"
-#include "explodingSprite.h"
 
 class Player: public TwowaySprite
 {

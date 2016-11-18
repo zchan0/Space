@@ -142,26 +142,19 @@ void Manager::update() {
   ++clock;
   Uint32 ticks = clock.getElapsedTicks();
 
-  static unsigned int lastSeconds = clock.getSeconds();
-  if ( clock.getSeconds() - lastSeconds == 5 ) {
-    lastSeconds = clock.getSeconds();
-    // switchSprite();
-  }
-
+  // update sprites
   for (unsigned int i = 0; i < sprites.size(); ++i) {
     sprites[i]->update(ticks);
   }
-
   for (unsigned int i = 0; i < asteroids.size(); ++i) {
     asteroids[i] -> update(ticks);
+  }
+  for (unsigned int i = 0; i < worlds.size(); ++i) {
+    worlds[i] -> update();
   }
 
   if ( makeVideo && frameCount < frameMax ) {
     makeFrame();
-  }
-
-  for (unsigned int i = 0; i < worlds.size(); ++i) {
-    worlds[i] -> update();
   }
 
   hud.update(ticks);
