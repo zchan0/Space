@@ -15,11 +15,26 @@ Player::~Player()
 
 void Player::draw() const
 {
+	if (explosion) {
+		explosion -> draw();
+		return;
+	}
+
 	TwowaySprite::draw();
+	bulletPool.draw();
 }
 
 void Player::update(Uint32 ticks)
 {
+	if (explosion) {
+		explosion -> update(ticks);
+		if (explosion -> chunkCount() == 0) {
+			delete explosion;
+			explosion = NULL;
+		}
+		return;
+	}
+
 	TwowaySprite::advanceFrame(ticks);	
 
   Vector2f incr = getVelocity() * static_cast<float>(ticks) * 0.001;

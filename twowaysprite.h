@@ -1,8 +1,7 @@
 #include <string>
 #include <vector>
 #include "drawable.h"
-
-class ExplodingSprite;
+#include "explodingSprite.h"
 
 enum Direction {
   RIGHT = 0,
@@ -13,14 +12,14 @@ class TwowaySprite : public Drawable {
 public:
   TwowaySprite(const std::string&);
   TwowaySprite(const TwowaySprite&);
-  virtual ~TwowaySprite(); 
 
+  virtual ~TwowaySprite(); 
   virtual void draw() const;
   virtual void update(Uint32 ticks);
   virtual const Frame* getFrame() const { 
     return frames[direction]; 
   }
-  void explode();
+  virtual void explode();
 
 protected:
   ExplodingSprite* explosion;

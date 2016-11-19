@@ -2,7 +2,6 @@
 #include "twowaysprite.h"
 #include "gamedata.h"
 #include "frameFactory.h"
-#include "explodingSprite.h"
 
 void TwowaySprite::advanceFrame(Uint32 ticks) {
   timeSinceLastFrame += ticks;
