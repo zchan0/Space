@@ -193,6 +193,7 @@ void Manager::play() {
           else clock.pause();
         }
         // player's key
+        // direction
         if (keystate[SDLK_a]) {
           player -> setStatus(Player::LEFT);
         }
@@ -223,6 +224,11 @@ void Manager::play() {
         }
         if (keystate[SDLK_w] && keystate[SDLK_s]) {
           player -> setStatus(Player::STAND);
+        }
+        // action
+        if (keystate[SDLK_SPACE]) {
+          player -> setStatus(Player::STAND);
+          player -> shoot(); 
         }
         // F key
         if (keystate[SDLK_F1]) {

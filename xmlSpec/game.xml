@@ -86,8 +86,20 @@
   <transparency>true</transparency> 
   <chunk> 
     <size>20</size>
-    <distance>200</distance>
+    <distance>2k00</distance>
   </chunk>
 </ship>
+
+<Bullet>
+    <file>images/bullet.png</file>
+    <number>1</number>
+    <frames>1</frames>
+    <frameInterval>100</frameInterval>
+    <width>20</width>
+    <height>7</height>
+    <speedX>700</speedX>
+    <speedY>0</speedY>
+    <transparency>true</transparency>
+</Bullet>
 
 </GameData>

@@ -1,5 +1,6 @@
 #include "ioManager.h"
 #include "twowaysprite.h"
+#include "bulletPool.h"
 
 class Player: public TwowaySprite
 {
@@ -24,10 +25,12 @@ class Player: public TwowaySprite
 		virtual void draw() const;
   	virtual void update(Uint32 ticks);
 
+		void shoot();
 		void setStatus(Status s);
 	
 	protected:
 		Status status;
+		BulletPool &bulletPool;
 		unsigned int speedX;
 		unsigned int speedY;
 

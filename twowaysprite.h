@@ -3,13 +3,15 @@
 #include "drawable.h"
 #include "explodingSprite.h"
 
-enum Direction {
-  RIGHT = 0,
-  LEFT  = 1
-};
 
 class TwowaySprite : public Drawable {
 public:
+
+  enum Direction {
+    RIGHT = 0,
+    LEFT
+  };
+
   TwowaySprite(const std::string&);
   TwowaySprite(const TwowaySprite&);
 
@@ -20,6 +22,10 @@ public:
     return frames[direction]; 
   }
   virtual void explode();
+
+  Direction currentDirection() const {
+    return direction;
+  }
 
 protected:
   ExplodingSprite* explosion;

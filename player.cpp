@@ -6,6 +6,7 @@
 Player::Player(const std::string &name):
 	TwowaySprite(name),
 	status(STAND),
+	bulletPool(BulletPool::getInstance()),
 	speedX(abs(Gamedata::getInstance().getXmlInt(name + "/speedX"))),
 	speedY(abs(Gamedata::getInstance().getXmlInt(name + "/speedY")))
 {}
@@ -59,6 +60,8 @@ void Player::update(Uint32 ticks)
     velocityX(0);
     X(worldWidth - frameWidth);
 	}
+
+	bulletPool.update(ticks);
 }
 
 void Player::setStatus(Status s)
@@ -103,4 +106,13 @@ void Player::setStatus(Status s)
 			velocityY(0);
 			break;
 	}
+}
+
+void Player::shoot()
+{
+	bool towardLeft = currentDirection() == TwowaySprite::LEFT;
+	float x = X() + (towardLeft ? 0 : 1) * frameWidth;
+	float y = Y() + frameHeight / 2;
+	float vx = (towardLeft ? -1.0 : 1.0) * Gamedata::getInstance().getXmlInt(bulletPool.bulletName() + "/speedX");
+	bulletPool.shoot(Vector2f(x, y), Vector2f(vx, 0));
 }
