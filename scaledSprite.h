@@ -32,6 +32,7 @@ public:
   float minScale() const;
   float maxScale() const;
   void explode();
+  bool offscreen() const;
 
 private:
   double scale;

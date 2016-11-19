@@ -4,6 +4,7 @@
 #include "scaledSprite.h"
 #include "gamedata.h"
 #include "explodingSprite.h"
+#include "viewport.h"
 
 ScaledSprite::ScaledSprite(const std::string& name, 
                            SDL_Surface* surface) :
@@ -128,3 +129,17 @@ void ScaledSprite::explode() {
   Sprite sprite(getName(), getPosition(), getVelocity(), getFrame());
   explosion = new ExplodingSprite(sprite); 
 }
+
+bool ScaledSprite::offscreen() const {
+  Vector2f viewPos = Viewport::getInstance().getPosition();
+  int viewWidth  = Gamedata::getInstance().getXmlInt("view/width");
+  int viewHeight = Gamedata::getInstance().getXmlInt("view/height");
+  
+  if (X() < viewPos[0] || X() > viewPos[0] + viewWidth || 
+      Y() < 0 || Y() > viewHeight) {
+    return true;
+  }
+
+  return false;
+}
+
