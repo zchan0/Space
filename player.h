@@ -24,13 +24,17 @@ class Player: public TwowaySprite
 		virtual ~Player();
 		virtual void draw() const;
   	virtual void update(Uint32 ticks);
+  	virtual bool collidedWith(const Drawable *d) const;
 
 		void shoot();
 		void setStatus(Status s);
 	
+    bool hit(const Drawable *d);
+
 	protected:
 		Status status;
 		BulletPool &bulletPool;
+  	CollisionStrategy *strategy;
 		unsigned int speedX;
 		unsigned int speedY;
 

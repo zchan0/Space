@@ -2,7 +2,7 @@
 * @Author: zhengcc
 * @Date:   2016-11-18 15:35:20
 * @Last Modified by:   zhengcc
-* @Last Modified time: 2016-11-18 22:33:15
+* @Last Modified time: 2016-11-19 13:50:28
 */
 
 #include "bullet.h"
@@ -13,6 +13,7 @@
 Bullet::Bullet(const std::string &name, const Vector2f &pos, const Vector2f &vel):
 	Drawable(name, pos, vel),
 	frame(FrameFactory::getInstance().getFrame(name)),
+	strategy(new PerPixelCollisionStrategy),
 	frameWidth(frame -> getWidth()),
 	frameHeight(frame -> getHeight()),
 	worldWidth(Gamedata::getInstance().getXmlInt("world/width")),
@@ -22,6 +23,7 @@ Bullet::Bullet(const std::string &name, const Vector2f &pos, const Vector2f &vel
 Bullet::Bullet(const Bullet& s): 
 	Drawable(s),
 	frame(s.frame),
+	strategy(s.strategy),
 	frameWidth(s.frameWidth),
 	frameHeight(s.frameHeight),
 	worldWidth(s.worldWidth),
@@ -52,4 +54,7 @@ void Bullet::reset(const Vector2f &pos, const Vector2f &vel)
 	setVelocity(vel);	
 }
 
-
+bool Bullet::collidedWith(const Drawable* d) const
+{
+	return strategy -> execute(*this, *d);
+}

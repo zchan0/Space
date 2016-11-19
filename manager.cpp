@@ -3,10 +3,9 @@
 #include <iomanip>
 #include <algorithm>
 
-#include "multisprite.h"
+#include "manager.h"
 #include "sprite.h"
 #include "gamedata.h"
-#include "manager.h"
 
 class ScaledSpriteCompare {
 public:
@@ -77,37 +76,6 @@ Manager::Manager() :
   viewport.setObjectToTrack(sprites[currentSprite]);
 }
 
-void Manager::draw() const {
-  
-  //  to create depth, draw order matters
-  //  create count = worlds.size() scale ranges
-  float scale; 
-  float minScale = asteroids[0] -> minScale();
-  float maxScale = asteroids[0] -> maxScale();
-  float stepScale = (maxScale - minScale) / worlds.size();
-
-  for (unsigned int i = 0; i < worlds.size(); ++i) {
-    worlds[i] -> draw();
-
-    for (unsigned int j = 0; j < asteroids.size(); ++j) {
-      scale = asteroids[j] -> getScale();
-      if (scale > minScale + i * stepScale && scale < minScale + (i + 1) * stepScale ) 
-        asteroids[j] -> draw();
-    }
-  }
-
-  for (unsigned int i = 0; i < sprites.size(); ++i) {
-    sprites[i]->draw();
-  }
-
-  io.printMessageAt(title, 30, 650);
-  
-  hud.draw();
-  viewport.draw();
-
-  SDL_Flip(screen);
-}
-
 void Manager::makeFrame() {
   std::stringstream strm;
   strm << "frames/" << username<< '.' 
@@ -136,6 +104,62 @@ void Manager::printAsteroids() {
   for (unsigned int i = 0; i < asteroids.size(); ++i) {
     std::cout << asteroids[i] -> getScale() << std::endl;
   }
+}
+
+void Manager::checkForCollisions() const {
+  std::vector<ScaledSprite *>::const_iterator ptr = asteroids.begin(); 
+  while(ptr != asteroids.end()) {
+    // ignore those which not on screen
+    if ((*ptr) -> offscreen()) {
+      ++ptr;
+      continue;
+    }
+    
+    // player got hurt
+    if (player -> collidedWith(*ptr)) {
+    }
+    
+    // player shoot ateriod
+    if (player -> hit(*ptr)) {
+      (*ptr) -> explode();
+      return; // one bullet hit one ateriod
+    }
+    
+    ++ptr;
+  }
+}
+
+void Manager::draw() const {
+  //  to create depth, draw order matters
+  //  create count = worlds.size() scale ranges
+  float scale; 
+  float minScale = asteroids[0] -> minScale();
+  float maxScale = asteroids[0] -> maxScale();
+  float stepScale = (maxScale - minScale) / worlds.size();
+
+  for (unsigned int i = 0; i < worlds.size(); ++i) {
+    worlds[i] -> draw();
+
+    for (unsigned int j = 0; j < asteroids.size(); ++j) {
+      scale = asteroids[j] -> getScale();
+      if (scale > minScale + i * stepScale && scale < minScale + (i + 1) * stepScale ) {
+        asteroids[j] -> draw();
+      } 
+    }
+  }
+
+  for (unsigned int i = 0; i < sprites.size(); ++i) {
+    sprites[i]->draw();
+  }
+
+  io.printMessageAt(title, 30, 650);
+
+  checkForCollisions();
+  
+  hud.draw();
+  viewport.draw();
+
+  SDL_Flip(screen);
 }
 
 void Manager::update() {

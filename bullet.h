@@ -1,4 +1,5 @@
 #include "drawable.h"
+#include "collisionStrategy.h"
 
 class Bullet: Drawable
 {
@@ -9,6 +10,7 @@ class Bullet: Drawable
 		virtual ~Bullet() {}
 		virtual void draw() const;
 		virtual void update(Uint32 ticks);
+  	virtual bool collidedWith(const Drawable *d) const;
 		virtual const Frame *getFrame() const {
 			return frame;
 		}
@@ -18,6 +20,7 @@ class Bullet: Drawable
 
 	private:
 		const Frame *frame;
+  	CollisionStrategy *strategy;
 		int frameWidth, frameHeight;
 		int worldWidth, worldHeight;
 

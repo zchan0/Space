@@ -42,6 +42,8 @@ private:
   void update();
   void makeAsteroids();
   void printAsteroids();
+  
+  void checkForCollisions() const;
 
   Manager(const Manager&);
   Manager& operator=(const Manager&);

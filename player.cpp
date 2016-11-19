@@ -7,12 +7,15 @@ Player::Player(const std::string &name):
 	TwowaySprite(name),
 	status(STAND),
 	bulletPool(BulletPool::getInstance()),
+	strategy(new PerPixelCollisionStrategy),
 	speedX(abs(Gamedata::getInstance().getXmlInt(name + "/speedX"))),
 	speedY(abs(Gamedata::getInstance().getXmlInt(name + "/speedY")))
 {}
 
 Player::~Player()
-{}
+{
+	delete strategy;
+}
 
 void Player::draw() const
 {
@@ -115,4 +118,14 @@ void Player::shoot()
 	float y = Y() + frameHeight / 2;
 	float vx = (towardLeft ? -1.0 : 1.0) * Gamedata::getInstance().getXmlInt(bulletPool.bulletName() + "/speedX");
 	bulletPool.shoot(Vector2f(x, y), Vector2f(vx, 0));
+}
+
+bool Player::collidedWith(const Drawable *d) const
+{
+	return strategy -> execute(*this, *d);
+}
+
+bool Player::hit(const Drawable *d)
+{
+	return bulletPool.collidedWith(d);	
 }

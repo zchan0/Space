@@ -14,6 +14,8 @@ class BulletPool
 		void update(Uint32 ticks);
 		void shoot(const Vector2f &pos, const Vector2f &vel);
 
+		bool collidedWith(const Drawable *d);
+
 	private:
 		std::string name;
 		float frameInterval;
