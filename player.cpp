@@ -111,6 +111,13 @@ void Player::setStatus(Status s)
 	}
 }
 
+void Player::reset()
+{
+	setStatus(STAND);
+	setPosition(Vector2f(Gamedata::getInstance().getXmlInt(getName() + "/startLoc/x"), 
+											 Gamedata::getInstance().getXmlInt(getName() + "/startLoc/y")));
+}
+
 void Player::shoot()
 {
 	bool towardLeft = currentDirection() == TwowaySprite::LEFT;

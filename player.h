@@ -27,6 +27,7 @@ class Player: public TwowaySprite
   	virtual bool collidedWith(const Drawable *d) const;
 
 		void shoot();
+		void reset();
 		void setStatus(Status s);
 	
     bool hit(const Drawable *d);

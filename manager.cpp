@@ -117,6 +117,7 @@ void Manager::checkForCollisions() const {
     
     // player got hurt
     if (player -> collidedWith(*ptr)) {
+      // player -> explode();
     }
     
     // player shoot ateriod
@@ -215,6 +216,9 @@ void Manager::play() {
         if ( keystate[SDLK_p] ) {
           if ( clock.isPaused() ) clock.unpause();
           else clock.pause();
+        }
+        if ( keystate[SDLK_r] ) {
+          player -> reset();
         }
         // player's key
         // direction
