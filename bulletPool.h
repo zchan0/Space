@@ -15,6 +15,8 @@ class BulletPool
 		void shoot(const Vector2f &pos, const Vector2f &vel);
 
 		bool collidedWith(const Drawable *d);
+		unsigned int bulletCount() const;
+		unsigned int freeCount() const;
 
 	private:
 		std::string name;

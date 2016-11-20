@@ -2,7 +2,7 @@
 * @Author: zhengcc
 * @Date:   2016-11-18 15:35:35
 * @Last Modified by:   zhengcc
-* @Last Modified time: 2016-11-19 15:16:24
+* @Last Modified time: 2016-11-19 21:32:31
 */
 
 #include "bulletPool.h"
@@ -80,6 +80,16 @@ bool BulletPool::collidedWith(const Drawable *d)
 	}
 
 	return false;
+}
+
+unsigned int BulletPool::bulletCount() const
+{
+	return bulletList.size();
+}
+
+unsigned int BulletPool::freeCount() const
+{
+	return freeList.size();
 }
 
 

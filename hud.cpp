@@ -4,6 +4,7 @@
 #include "clock.h"
 #include "aaline.h"
 #include "gamedata.h"
+#include "bulletPool.h"
 
 Hud& Hud::getInstance()
 {
@@ -59,9 +60,14 @@ void Hud::draw() const
     io.printMessageAt("S - move down",  30, 110);
     io.printMessageAt("A - move left",  30, 130);
   	io.printMessageAt("D - move right", 30, 150);
-    io.printMessageAt("l - slow; p - pasue", 30, 190);	
+    io.printMessageAt("space - shoot", 	30, 190);
+    io.printMessageAt("L - slow; p - pasue", 30, 210);	
+    io.printMessageValueAt("Bullet List ", BulletPool::getInstance().bulletCount(), 30, 250);
+    io.printMessageValueAt("Free   List ", BulletPool::getInstance().freeCount(), 	30, 270);
 	} else {
-    io.printMessageAt("F1 Help", 30, 40);
+    io.printMessageAt("F1 Help", 		30, 40);
+    io.printMessageAt("F4 Record", 	30, 60);
+		io.printMessageAt("R  Restart", 30, 80);
 	}
 }
 

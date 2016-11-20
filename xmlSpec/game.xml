@@ -19,11 +19,11 @@
 </view>
 
 <hud>
-  <width>240</width>
-  <height>240</height>
+  <width>280</width>
+  <height>280</height>
   <startX>20</startX>
   <startY>20</startY>
-  <showTime>20000</showTime>
+  <showTime>30000</showTime>
   <thick>2</thick> 
 </hud>
 
