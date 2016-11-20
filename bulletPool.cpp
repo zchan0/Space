@@ -2,7 +2,7 @@
 * @Author: zhengcc
 * @Date:   2016-11-18 15:35:35
 * @Last Modified by:   zhengcc
-* @Last Modified time: 2016-11-19 21:32:31
+* @Last Modified time: 2016-11-19 22:44:46
 */
 
 #include "bulletPool.h"
@@ -55,11 +55,11 @@ void BulletPool::shoot(const Vector2f &pos, const Vector2f &vel)
 			bulletList.push_back(bullet);
 		} else {
 			freeList.begin() -> reset(pos, vel);
-			bulletList.push_back(*freeList.begin());
+			bulletList.push_back(*(freeList.begin()));
 			freeList.erase(freeList.begin());
 		}
+		timeSinceLastFrame = 0;
 	}
-	timeSinceLastFrame = 0;
 }
 
 bool BulletPool::collidedWith(const Drawable *d)

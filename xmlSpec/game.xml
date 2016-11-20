@@ -40,7 +40,7 @@
   <width>32</width>
   <height>32</height>
   <loc x="-40" y="-40"/>
-  <speed x="1" y="200"/>
+  <speed x="1" y="100"/>
   <transparency>true</transparency>
   <chunk>
     <size>20</size>
@@ -86,14 +86,12 @@
   <transparency>true</transparency> 
   <chunk> 
     <size>20</size>
-    <distance>2k00</distance>
+    <distance>200</distance>
   </chunk>
 </ship>
 
 <Bullet>
     <file>images/bullet.png</file>
-    <number>1</number>
-    <frames>1</frames>
     <frameInterval>100</frameInterval>
     <width>20</width>
     <height>7</height>
