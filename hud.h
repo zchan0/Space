@@ -7,11 +7,13 @@ class Hud
 		void draw() const;
 		void update(Uint32);
 		void toggle();
+		void toggleOP();
 
 	private:
 		const IOManager &io;
 		SDL_Surface *screen;
 		bool showHud;
+		bool showOP;	// show object pool
 		double elapsedTime;
 		unsigned showTime;
 		unsigned startX;

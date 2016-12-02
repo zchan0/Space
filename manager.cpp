@@ -281,6 +281,9 @@ void Manager::play() {
         if (keystate[SDLK_F1]) {
           hud.toggle();
         }
+        if (keystate[SDLK_F2]) {
+          hud.toggleOP(); 
+        }
         if (keystate[SDLK_F4] && !makeVideo) {
           std::cout << "Making video frames" << std::endl;
           makeVideo = true;

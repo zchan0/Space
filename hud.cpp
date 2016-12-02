@@ -16,6 +16,7 @@ Hud::Hud(const std::string &name):
 	io(IOManager::getInstance()),
 	screen(io.getScreen()),
 	showHud(true),
+	showOP(false),
 	elapsedTime(0.0),
 	showTime(Gamedata::getInstance().getXmlInt(name + "/showTime")),
 	startX(Gamedata::getInstance().getXmlInt(name + "/startX")),
@@ -60,15 +61,18 @@ void Hud::draw() const
     io.printMessageAt("S - move down",  30, 110);
     io.printMessageAt("A - move left",  30, 130);
   	io.printMessageAt("D - move right", 30, 150);
-    io.printMessageAt("space - shoot", 	30, 190);
-    io.printMessageAt("L - slow; P - pasue", 30, 210);
-    io.printMessageAt("G - God mode", 	30, 230);
-    io.printMessageValueAt("Bullet List ", BulletPool::getInstance().bulletCount(), 30, 270);
-    io.printMessageValueAt("Free   List ", BulletPool::getInstance().freeCount(), 	30, 290);
+    io.printMessageAt("g - god mode", 	30, 190);
+    io.printMessageAt("space - shoot", 	30, 210);
+    io.printMessageAt("L - slow; P - pasue", 30, 240);
 	} else {
     io.printMessageAt("F1 Help", 		30, 40);
     io.printMessageAt("F4 Record", 	30, 60);
 		io.printMessageAt("R  Restart", 30, 80);
+    io.printMessageAt("F2 Object Pool", 30, 100);
+	}
+	if (showOP) {
+    io.printMessageValueAt("Bullet List ", BulletPool::getInstance().bulletCount(), 1000, 40);
+    io.printMessageValueAt("Free   List ", BulletPool::getInstance().freeCount(), 	1000, 60);
 	}
 }
 
@@ -83,6 +87,11 @@ void Hud::toggle()
 {
 	showHud = !showHud;
 	elapsedTime = 0.0;
+}
+
+void Hud::toggleOP()
+{
+	showOP = !showOP;
 }
 
 
