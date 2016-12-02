@@ -6,6 +6,7 @@
 #include "manager.h"
 #include "sprite.h"
 #include "gamedata.h"
+#include "sound.h"
 
 class ScaledSpriteCompare {
 public:
@@ -190,6 +191,7 @@ void Manager::play() {
   SDL_Event event;
   bool done = false;
   bool keyCatch = false;
+  static SDLSound sound;
 
   while ( not done ) {
     while ( SDL_PollEvent(&event) ) {
@@ -261,6 +263,7 @@ void Manager::play() {
         if (keystate[SDLK_SPACE]) {
           player -> setStatus(Player::STAND);
           player -> shoot(); 
+          sound[SDLSound::SHOOT];
         }
         // F key
         if (keystate[SDLK_F1]) {
