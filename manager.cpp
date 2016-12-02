@@ -52,6 +52,7 @@ Manager::Manager() :
   asteroids(),
   currentSprite(0),
   makeVideo( false ),
+  godMode( false ),
   frameCount( 0 ),
   hurtInterval( 0 ),
   username(  Gamedata::getInstance().getXmlStr("username") ),
@@ -120,7 +121,7 @@ void Manager::checkForCollisions() {
     }
     
     // player got hurt
-    if (player -> collidedWith(*ptr) && hurtInterval > 2000) {
+    if (!godMode && player -> collidedWith(*ptr) && hurtInterval > 1000) {
         player -> getHurt();
         sound[SDLSound::HURT];
         hurtInterval = 0;
@@ -160,6 +161,9 @@ void Manager::draw() {
   }
 
   io.printMessageAt(title, 30, 650);
+  if (godMode) {
+    io.printMessageCenteredAt("God mode is on", 40);
+  } 
 
   checkForCollisions();
   
@@ -230,6 +234,9 @@ void Manager::play() {
         }
         if ( keystate[SDLK_r] ) {
           player -> reset();
+        }
+        if ( keystate[SDLK_g] ) {
+          godMode = !godMode;
         }
         // player's key
         // direction

@@ -30,6 +30,7 @@ private:
 
   int currentSprite;
   bool makeVideo;
+  bool godMode;
   int frameCount;
   int hurtInterval;
   const std::string username;

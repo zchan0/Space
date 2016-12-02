@@ -20,7 +20,7 @@
 
 <hud>
   <width>280</width>
-  <height>280</height>
+  <height>300</height>
   <startX>20</startX>
   <startY>20</startY>
   <showTime>30000</showTime>
