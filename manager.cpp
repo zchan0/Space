@@ -189,6 +189,7 @@ void Manager::update() {
 void Manager::play() {
   SDL_Event event;
   bool done = false;
+  bool keyCatch = false;
 
   while ( not done ) {
     while ( SDL_PollEvent(&event) ) {
@@ -200,9 +201,12 @@ void Manager::play() {
       // No key input, set player to STAND status
       if (event.type == SDL_KEYUP) {
         player -> setStatus(Player::STAND);
+        keyCatch = false;
       }
 
       if(event.type == SDL_KEYDOWN) {
+        if (!keyCatch) { keyCatch = true; }
+        
         if (keystate[SDLK_ESCAPE] || keystate[SDLK_q]) {
           done = true;
           break;
