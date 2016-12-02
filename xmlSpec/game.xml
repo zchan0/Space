@@ -27,6 +27,19 @@
   <thick>2</thick> 
 </hud>
 
+<health>
+    <x>850</x>
+    <y>660</y>
+    <length>300</length>
+    <hurt>20</hurt>
+    <width>140</width>
+    <thick>14</thick>
+    <increment>20</increment>
+    <interval>1000</interval>
+    <color>red</color>
+</health>
+
+
 <world>
   <width>6000</width>
   <height>720</height>
@@ -34,7 +47,7 @@
 
 <asteroid>
   <file>images/asteroid.png</file>
-  <cushion>50</cushion>
+  <cushion>30</cushion>
   <scale min="0.5" max="1.5"/>
   <src x="0" y="0"/>
   <width>32</width>

@@ -31,6 +31,7 @@ private:
   int currentSprite;
   bool makeVideo;
   int frameCount;
+  int hurtInterval;
   const std::string username;
   const std::string title;
   const int frameMax;
@@ -38,12 +39,12 @@ private:
   Player *player;
   Hud &hud;
   
-  void draw() const;
+  void draw();
   void update();
   void makeAsteroids();
   void printAsteroids();
   
-  void checkForCollisions() const;
+  void checkForCollisions();
 
   Manager(const Manager&);
   Manager& operator=(const Manager&);

@@ -1,6 +1,7 @@
 #include "ioManager.h"
 #include "twowaysprite.h"
 #include "bulletPool.h"
+#include "health.h"
 
 class Player: public TwowaySprite
 {
@@ -29,11 +30,13 @@ class Player: public TwowaySprite
 		void shoot();
 		void reset();
 		void setStatus(Status s);
+		void getHurt();
 	
     bool hit(const Drawable *d);
 
 	protected:
 		Status status;
+		Health health;
 		BulletPool &bulletPool;
   	CollisionStrategy *strategy;
 		unsigned int speedX;

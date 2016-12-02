@@ -25,7 +25,8 @@ public:
     SHOOT = 0,
     EXPLOSION,
     THUMP,
-    BEGIN 
+    BEGIN,
+    HURT
   } SoundName;
 
   void startMusic();

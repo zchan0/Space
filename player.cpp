@@ -6,6 +6,7 @@
 Player::Player(const std::string &name):
 	TwowaySprite(name),
 	status(STAND),
+	health("health"),
 	bulletPool(BulletPool::getInstance()),
 	strategy(new PerPixelCollisionStrategy),
 	speedX(abs(Gamedata::getInstance().getXmlInt(name + "/speedX"))),
@@ -25,6 +26,7 @@ void Player::draw() const
 	}
 
 	TwowaySprite::draw();
+	health.draw();
 	bulletPool.draw();
 }
 
@@ -65,6 +67,7 @@ void Player::update(Uint32 ticks)
 	}
 
 	bulletPool.update(ticks);
+	health.update(ticks);
 }
 
 void Player::setStatus(Status s)
@@ -116,6 +119,16 @@ void Player::reset()
 	setStatus(STAND);
 	setPosition(Vector2f(Gamedata::getInstance().getXmlInt(getName() + "/startLoc/x"), 
 											 Gamedata::getInstance().getXmlInt(getName() + "/startLoc/y")));
+	health.reset();
+}
+
+void Player::getHurt()
+{
+	health.getHurt();
+	if (health.getCurrentLength() == 0) {
+		explode();
+		health.reset();
+	}
 }
 
 void Player::shoot()

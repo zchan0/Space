@@ -8,6 +8,8 @@
 #include "gamedata.h"
 #include "sound.h"
 
+static SDLSound sound;
+
 class ScaledSpriteCompare {
 public:
   bool operator()(const ScaledSprite *lhs, const ScaledSprite *rhs) const {
@@ -51,6 +53,7 @@ Manager::Manager() :
   currentSprite(0),
   makeVideo( false ),
   frameCount( 0 ),
+  hurtInterval( 0 ),
   username(  Gamedata::getInstance().getXmlStr("username") ),
   title( Gamedata::getInstance().getXmlStr("screenTitle") ),
   frameMax( Gamedata::getInstance().getXmlInt("frameMax") ),
@@ -107,7 +110,7 @@ void Manager::printAsteroids() {
   }
 }
 
-void Manager::checkForCollisions() const {
+void Manager::checkForCollisions() {
   std::vector<ScaledSprite *>::const_iterator ptr = asteroids.begin(); 
   while(ptr != asteroids.end()) {
     // ignore those which not on screen
@@ -117,8 +120,10 @@ void Manager::checkForCollisions() const {
     }
     
     // player got hurt
-    if (player -> collidedWith(*ptr)) {
-      // player -> explode();
+    if (player -> collidedWith(*ptr) && hurtInterval > 2000) {
+        player -> getHurt();
+        sound[SDLSound::HURT];
+        hurtInterval = 0;
     }
     
     // player shoot ateriod
@@ -131,7 +136,7 @@ void Manager::checkForCollisions() const {
   }
 }
 
-void Manager::draw() const {
+void Manager::draw() {
   //  to create depth, draw order matters
   //  create count = worlds.size() scale ranges
   float scale; 
@@ -167,6 +172,7 @@ void Manager::draw() const {
 void Manager::update() {
   ++clock;
   Uint32 ticks = clock.getElapsedTicks();
+  hurtInterval += ticks;
 
   // update sprites
   for (unsigned int i = 0; i < sprites.size(); ++i) {
@@ -191,7 +197,6 @@ void Manager::play() {
   SDL_Event event;
   bool done = false;
   bool keyCatch = false;
-  static SDLSound sound;
 
   while ( not done ) {
     while ( SDL_PollEvent(&event) ) {
