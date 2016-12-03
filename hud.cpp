@@ -54,25 +54,26 @@ void Hud::draw() const
 {
 	if (showHud) {
 		drawBox();
-  	// Print infomation
-  	io.printMessageValueAt("Seconds: ", Clock::getInstance().getSeconds(), 30, 30);
-    io.printMessageValueAt("Fps: ", Clock::getInstance().getFps(), 30, 50);
-    io.printMessageAt("W - move up",    30, 90);
-    io.printMessageAt("S - move down",  30, 110);
-    io.printMessageAt("A - move left",  30, 130);
-  	io.printMessageAt("D - move right", 30, 150);
-    io.printMessageAt("g - god mode", 	30, 190);
-    io.printMessageAt("space - shoot", 	30, 210);
-    io.printMessageAt("L - slow; P - pasue", 30, 240);
+	  	// Print infomation
+	  	io.printMessageValueAt("Seconds: ", Clock::getInstance().getSeconds(), 30, 30);
+	    io.printMessageValueAt("Fps: ", Clock::getInstance().getFps(), 30, 50);
+	    io.printMessageAt("W - move up",    30, 90);
+	    io.printMessageAt("S - move down",  30, 110);
+	    io.printMessageAt("A - move left",  30, 130);
+	  	io.printMessageAt("D - move right", 30, 150);
+	    io.printMessageAt("g - god mode", 	30, 190);
+	    io.printMessageAt("space - shoot", 	30, 210);
+		io.printMessageAt("r - restart", 	30, 230);
+	    io.printMessageAt("l - slow; p - pasue", 30, 250);
+	    io.printMessageAt("Goal is to get HIGHEST score!!!", 30, 280);
 	} else {
-    io.printMessageAt("F1 Help", 		30, 40);
-    io.printMessageAt("F4 Record", 	30, 60);
-		io.printMessageAt("R  Restart", 30, 80);
-    io.printMessageAt("F2 Object Pool", 30, 100);
+	    io.printMessageAt("F1 Help", 	30, 40);
+	    io.printMessageAt("F2 Object Pool", 30, 60);
+	    io.printMessageAt("F4 Record", 	30, 80);
 	}
 	if (showOP) {
-    io.printMessageValueAt("Bullet List ", BulletPool::getInstance().bulletCount(), 1000, 40);
-    io.printMessageValueAt("Free   List ", BulletPool::getInstance().freeCount(), 	1000, 60);
+	    io.printMessageValueAt("Bullet List ", BulletPool::getInstance().bulletCount(), 1000, 60);
+	    io.printMessageValueAt("Free   List ", BulletPool::getInstance().freeCount(), 	1000, 80);
 	}
 }
 

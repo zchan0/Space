@@ -20,7 +20,7 @@
 
 <hud>
   <width>280</width>
-  <height>250</height>
+  <height>290</height>
   <startX>20</startX>
   <startY>20</startY>
   <showTime>30000</showTime>
@@ -101,6 +101,7 @@
     <size>20</size>
     <distance>200</distance>
   </chunk>
+  <bonus>5</bonus>
 </ship>
 
 <Bullet>

@@ -2,6 +2,7 @@
 
 #include "player.h"
 #include "gamedata.h"
+#include "ioManager.h"
 
 Player::Player(const std::string &name):
 	TwowaySprite(name),
@@ -10,7 +11,9 @@ Player::Player(const std::string &name):
 	bulletPool(BulletPool::getInstance()),
 	strategy(new PerPixelCollisionStrategy),
 	speedX(abs(Gamedata::getInstance().getXmlInt(name + "/speedX"))),
-	speedY(abs(Gamedata::getInstance().getXmlInt(name + "/speedY")))
+	speedY(abs(Gamedata::getInstance().getXmlInt(name + "/speedY"))),
+	score(0),
+	bonus(Gamedata::getInstance().getXmlInt(name + "/bonus"))
 {}
 
 Player::~Player()
@@ -20,6 +23,13 @@ Player::~Player()
 
 void Player::draw() const
 {
+    static unsigned int hisgestScore = 0;
+    if (hisgestScore < score) {
+        hisgestScore = score;
+    }
+    IOManager::getInstance().printMessageValueAt("Your Score: ", score, 1000, 20);
+    IOManager::getInstance().printMessageValueAt("Highest Score: ", hisgestScore, 1000, 40);
+
 	if (explosion) {
 		explosion -> draw();
 		return;
@@ -120,6 +130,7 @@ void Player::reset()
 	setPosition(Vector2f(Gamedata::getInstance().getXmlInt(getName() + "/startLoc/x"), 
 											 Gamedata::getInstance().getXmlInt(getName() + "/startLoc/y")));
 	health.reset();
+	score = 0;
 }
 
 void Player::getHurt()
@@ -129,6 +140,11 @@ void Player::getHurt()
 		explode();
 		health.reset();
 	}
+}
+
+void Player::addScore()
+{
+	score += bonus;
 }
 
 void Player::shoot()

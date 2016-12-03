@@ -130,6 +130,7 @@ void Manager::checkForCollisions() {
     // player shoot ateriod
     if (player -> hit(*ptr)) {
       (*ptr) -> explode();
+      player -> addScore();
       return; // one bullet hit one ateriod
     }
     
