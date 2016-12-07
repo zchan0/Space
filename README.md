@@ -1,6 +1,6 @@
 Screenshots
 ---
-![](http://imgur.com/a/jO6El)
+![](http://i.imgur.com/kaFHw2y.jpg)
 
 Credits
 ---
