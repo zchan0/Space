@@ -7,10 +7,10 @@
 <numberOfAsteroids>50</numberOfAsteroids>
 
 <frameCap>60</frameCap>
-<frameBase>200</frameBase>
+<frameBase>100</frameBase>
 <framesAreCapped>true</framesAreCapped>
 
-<frameMax>200</frameMax>
+<frameMax>400</frameMax>
 <username>cencenz</username>
 
 <view>
@@ -31,7 +31,7 @@
     <x>850</x>
     <y>660</y>
     <length>300</length>
-    <hurt>20</hurt>
+    <hurt>30</hurt>
     <width>140</width>
     <thick>14</thick>
     <increment>20</increment>
@@ -53,7 +53,7 @@
   <width>32</width>
   <height>32</height>
   <loc x="-40" y="-40"/>
-  <speed x="1" y="100"/>
+  <speed x="1" y="200"/>
   <transparency>true</transparency>
   <chunk>
     <size>20</size>

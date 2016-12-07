@@ -119,6 +119,15 @@ void Manager::checkForCollisions() {
       ++ptr;
       continue;
     }
+
+    // ignore those behind world 1
+    float minScale = asteroids[0] -> minScale();
+    float maxScale = asteroids[0] -> maxScale();
+    float stepScale = (maxScale - minScale) / worlds.size();
+    if ((*ptr) -> getScale() < minScale + stepScale * (worlds.size() - 1)) {
+      ++ptr;
+      continue;
+    }
     
     // player got hurt
     if (!godMode && player -> collidedWith(*ptr) && hurtInterval > 1000) {

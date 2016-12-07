@@ -29,12 +29,12 @@ class Player: public TwowaySprite
 
 	void shoot();
 	void reset();
-	void setStatus(Status s);
 	void getHurt();
     void addScore();
-    unsigned int getScore() const { return score; }
+	void setStatus(Status s);
 	
     bool hit(const Drawable *d);
+    unsigned int getScore() const { return score; }
 
 	protected:
 	Status status;

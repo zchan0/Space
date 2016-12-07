@@ -138,7 +138,7 @@ void Player::getHurt()
 	health.getHurt();
 	if (health.getCurrentLength() == 0) {
 		explode();
-		health.reset();
+		reset();
 	}
 }
 

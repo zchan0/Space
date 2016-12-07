@@ -53,6 +53,7 @@ void BulletPool::shoot(const Vector2f &pos, const Vector2f &vel)
 		if (freeList.empty()) {
 			Bullet bullet(name, pos, vel);
 			bulletList.push_back(bullet);
+			freeList.push_back(bullet);
 		} else {
 			freeList.begin() -> reset(pos, vel);
 			bulletList.push_back(*(freeList.begin()));
