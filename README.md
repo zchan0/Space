@@ -1,15 +1,12 @@
-# credits
+Screenshots
+---
+![](http://imgur.com/a/jO6El)
 
-- Background images http://opengameart.org/content/bevouliin-free-mountain-game-background
+Credits
+---
 
-- Pink flappy bird http://opengameart.org/content/bevouliin-free-flappy-pink-bird-spritesheets-for-game-developers
+- space back 1/2 http://opengameart.org/content/space-game-art-pack-extended
+- space ship http://opengameart.org/content/titan-battlecruiser
+- asteroid http://opengameart.org/content/asteroid-generator-and-a-set-of-generated-asteroids
+- music http://opengameart.org/content/nes-shooter-music-5-tracks-3-jingles
 
-- Green flappy bird http://opengameart.org/content/bevouliin-free-flappy-hatbird-game-character-sprite-sheets-for-gamedevs
-
-- Red flappy bird http://opengameart.org/content/bevouliin-free-red-flappy-bee-bird-game-character-sprite-sheets-for-game-developers
-
-- Yellow bee http://opengameart.org/content/game-character-flying-cat-sprite-sheets
-
-- Green boy http://opengameart.org/content/bevouliin-free-game-sprites-crocodile-mascot-running-and-jumping-boy-game-character
-
-- Red boy http://opengameart.org/content/red-haired-run-and-jump-sprite-sheets
